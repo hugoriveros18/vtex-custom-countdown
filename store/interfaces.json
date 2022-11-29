@@ -1,0 +1,6 @@
+{
+  "custom-countdown": {
+    "component": "Countdown",
+    "render": "client"
+  }
+}
