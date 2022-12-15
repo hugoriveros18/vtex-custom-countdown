@@ -20,7 +20,7 @@ In your theme's `manifest.json`, add the Countdown app as a dependency:
 
 ```json
   "dependencies": {
-    "vendor.custom-countdown": "0.x"
+    "itgloberspartnercl.custom-countdown": "0.x"
   }
 ```
 
