@@ -1,108 +1,88 @@
-📢 Use this project, [contribute](https://github.com/{OrganizationName}/{AppName}) to it or open issues to help evolve it using [Store Discussion](https://github.com/vtex-apps/store-discussion).
-
-# APP NAME
+# Countdown
 
 <!-- DOCS-IGNORE:start -->
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <!-- DOCS-IGNORE:end -->
 
-Under the app's name, you should explain the topic, giving a **brief description** of its **functionality** in a store when installed.
+The Countdown component displays a timer related to an event or offer, which works while it is active, with a custom message. Once it is over it shows a text indicating this. 
+.
 
-Next, **add media** (either an image of a GIF) with the rendered components, so that users can better understand how the app works in practice. 
+<img src="../react/assets/countdown.png" width="auto"/> 
 
-![Media Placeholder](https://user-images.githubusercontent.com/52087100/71204177-42ca4f80-227e-11ea-89e6-e92e65370c69.png)
 
 ## Configuration 
 
-In this section, you first must **add the primary instructions** that will allow users to use the app's blocks in their store, such as:
+### Step 1 - Adding the Countdown app to your theme's dependencies
 
-1. Adding the app as a theme dependency in the `manifest.json` file;
-2. Declaring the app's main block in a given theme template or inside another block from the theme.
+In your theme's `manifest.json`, add the Countdown app as a dependency:
 
-Remember to add a table with all blocks exported by the app and their descriptions. You can verify an example of it on the [Search Result documentation](https://vtex.io/docs/components/all/vtex.search-result@3.56.1/). 
+```json
+  "dependencies": {
+    "vendor.custom-countdown": "0.x"
+  }
+```
 
-Next, add the **props table** containing your block's props. 
+### Step 2 - Declaring the block on the page you want it to be displayed
 
-If the app exports more than one block, create several tables - one for each block. For example:
+Now, you can use the block exported by the `custom-countdown` app.
 
-### `block-1` props
+#### `custom-countdown` blocks
+ Block name   | Description  |
+| -------- | ------------------------ |
+| `custom-countdown`     |  ![https://img.shields.io/badge/-Mandatory-red](https://img.shields.io/badge/-Mandatory-red) Enables you to render a timer associate with an event or offer. By default when the component is declared it will show a title with the text "It's over".                    
+
+```json
+  "header.full": {
+    "blocks": [
+        "header-layout.desktop"
+    ]
+  },
+  "header-layout.desktop": {
+    "children": [
+        "custom-countdown"
+    ]
+  }
+```
+
+### Step 2 - Defining the props that the component will have
+
+Check all props to configure the block in the table below:
+
+### `custom-countdown` props
 
 | Prop name    | Type            | Description    | Default value                                                                                                                               |
 | ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
-
-
-### `block-2` props
-
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
-
-Prop types are: 
-
-- `string` 
-- `enum` 
-- `number` 
-- `boolean` 
-- `object` 
-- `array` 
-
-When documenting a prop whose type is `object` or `array` another prop table will be needed. You can create it following the example below:
-
-- `propName` object:
-
-| Prop name    | Type            | Description    | Default value                                                                                                                               |
-| ------------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | 
-| `XXXXX`      | `XXXXXX`       | XXXXXXXX         | `XXXXXX`        |
-
-
-Remember to also use this Configuration section to  **showcase any necessary disclaimer** related to the app and its blocks, such as the different behavior it may display during its configuration. 
-
-## Modus Operandi *(not mandatory)*
-
-There are scenarios in which an app can behave differently in a store, according to how it was added to the catalog, for example. It's crucial to go through these **behavioral changes** in this section, allowing users to fully understand the **practical application** of the app in their store.
-
-If you feel compelled to give further details about the app, such as it's **relationship with the VTEX admin**, don't hesitate to use this section. 
+| `targetDate`      | `string`       | ![https://img.shields.io/badge/-Mandatory-red](https://img.shields.io/badge/-Mandatory-red)Defines the end date of the countdown, it must be set in the format YYYY-MM-DD. E.g. 2023-10-21(21 of october, 2023). <br />`YYYY` -- year as a 4-digit number. <br />`MM` -- month from 01 to 12. <br />`DD` -- day from 01 to last day of the month (various). | `2000-12-12`        |
+| `targetHour`      | `string`       | Defines the end time of the countdown, it must be set in the format HH:MM:SS. E.g. 08:30:00(08:30 a.m.). <br />`HH` -- hours from 00 to 23. <br />`MM` -- minutes from 00 to 59. <br />`SS` -- seconds from 00 to 59.   | `00:00:00`        |
+| `countdownInactiveMessage`      | `string`       | Message that is showed when the countdown has not been defined or it is over. | `It's over`        |
+| `countdownActiveMessage`      | `string`       | Message that is showed while the countdown is active or currently in process.| `Time to finish:`        |
 
 ## Customization
 
-The first thing that should be present in this section is the sentence below, showing users the recipe pertaining to CSS customization in apps:
-
-`In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).`
-
-Thereafter, you should add a single column table with the available CSS handles for the app, like the one below. Note that the Handles must be ordered alphabetically.
+In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
 
 | CSS Handles |
 | ----------- | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` | 
-| `XXXXX` |
-
-
-If there are none, add the following sentence instead:
-
-`No CSS Handles are available yet for the app customization.`
+| `countdown__container` | 
+| `countdown__message` | 
+| `countdown__message--text` | 
+| `countdown__time` | 
+| `countdown__time--box` | 
+| `countdown__time--box-numbers` | 
+| `countdown__time--box-text` | 
+| `countdown__time--phone` | 
+| `countdown__message--text-phone` | 
+| `countdown__time--box-numbers-phone` | 
+| `countdown__inactive--container` | 
+| `countdown__inactive--text` |
 
 <!-- DOCS-IGNORE:start -->
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people:
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
-
-<!-- DOCS-IGNORE:end -->
+1. Hugo Felipe Riveros Fajardo
 
 ---- 
 

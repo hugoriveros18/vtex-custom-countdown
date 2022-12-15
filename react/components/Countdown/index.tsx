@@ -1,30 +1,34 @@
-// react/Countdown.tsx
 import React, { useState } from 'react'
 import { useCssHandles } from 'vtex.css-handles'
-
 import { TimeSplit } from '../../typings/global'
-import { getTwoDaysFromNow, tick } from '../../typings/time'
+import { tick } from '../../typings/time'
 import countdownSchema from '../../schemas/countdown-schema'
 import './styles.css'
 
 interface Props {
   targetDate: string
+  targetHour: string
+  countdownInactiveMessage: string
+  countdownActiveMessage: string
+  message: string
 }
 
-const DEAFULT_TARGET_DATE = getTwoDaysFromNow()
-
-DEAFULT_TARGET_DATE
-
-const Countdown = ({ targetDate }: Props) => {
+const Countdown = ({
+  targetDate = '2000-12-12',
+  targetHour = '00:00:00',
+  countdownInactiveMessage = "It's over",
+  countdownActiveMessage = 'Time to finish:',
+}: Props) => {
   // STATES
   const [timeRemaining, setTimeRemaining] = useState<TimeSplit>({
     hours: '00',
     minutes: '00',
     seconds: '00',
   })
-
+  const [countdownFinished, setCountdownFinished] = useState<boolean>(false)
+  
   // FUNCTIONS
-  tick(targetDate, setTimeRemaining)
+  tick(targetDate, targetHour, setTimeRemaining, countdownFinished, setCountdownFinished)
 
   // STYLES
   const CSS_HANDLES = [
@@ -38,15 +42,24 @@ const Countdown = ({ targetDate }: Props) => {
     'countdown__time--phone',
     'countdown__message--text-phone',
     'countdown__time--box-numbers-phone',
+    'countdown__inactive--container',
+    'countdown__inactive--text',
   ]
 
   const handles = useCssHandles(CSS_HANDLES)
 
   // JSX
+  if (countdownFinished) {
+    return (
+      <div className={handles['countdown__inactive--container']}>
+        <p className={handles['countdown__inactive--text']}>{countdownInactiveMessage}</p>
+      </div>
+    )
+  }
   return (
     <div className={handles.countdown__container}>
       <div className={handles.countdown__message}>
-        <p className={handles['countdown__message--text']}>ENDS IN:</p>
+        <p className={handles['countdown__message--text']}>{countdownActiveMessage}</p>
       </div>
       <div className={handles.countdown__time}>
         <div className={handles['countdown__time--box']}>
@@ -69,7 +82,7 @@ const Countdown = ({ targetDate }: Props) => {
         </div>
       </div>
       <div className={handles['countdown__time--phone']}>
-        <p className={handles['countdown__message--text-phone']}>ENDS IN:</p>
+        <p className={handles['countdown__message--text-phone']}>{countdownActiveMessage}</p>
         <p className={handles['countdown__time--box-numbers-phone']}>
           {`${timeRemaining.hours} : ${timeRemaining.minutes} : ${timeRemaining.seconds}`}
         </p>

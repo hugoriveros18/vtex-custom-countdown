@@ -28,25 +28,22 @@ const parseTimeRemaining = (totalSeconds: number): TimeSplit => {
 
 export const tick = (
   targetDate: string,
-  dispatchFn: React.Dispatch<React.SetStateAction<TimeSplit>>
+  targetHour: string,
+  dispatchFn: React.Dispatch<React.SetStateAction<TimeSplit>>,
+  countdownFinished : boolean,
+  setCountdownFinished : (val: boolean) => void
 ) => {
   const ONE_SECOND_IN_MILLIS = 1000
-  const finalDate = new Date(targetDate)
+  const formatFinalDate = new Date(`${targetDate}T${targetHour}`).toISOString();
+  const finalDate = new Date(formatFinalDate);
   const now = new Date()
-  const secondsLeft =
-    (finalDate.getTime() - now.getTime()) / ONE_SECOND_IN_MILLIS
-
-  setTimeout(() => {
-    dispatchFn(parseTimeRemaining(secondsLeft))
-  }, ONE_SECOND_IN_MILLIS)
-}
-
-// DEFAULT DATE (2 days from now)
-export const getTwoDaysFromNow = () => {
-  const todayDate = new Date()
-  const twoDaysFromNowDate = new Date()
-
-  twoDaysFromNowDate.setDate(todayDate.getDate() + 2)
-
-  return twoDaysFromNowDate.toISOString()
+  const secondsLeft = (finalDate.getTime() - now.getTime()) / ONE_SECOND_IN_MILLIS;
+  
+  if((secondsLeft < 0 || finalDate.toString() === "Invalid Date") && !countdownFinished) {
+    setCountdownFinished(true);
+  } else {
+    setTimeout(() => {
+      dispatchFn(parseTimeRemaining(secondsLeft))
+    }, ONE_SECOND_IN_MILLIS)
+  }
 }
